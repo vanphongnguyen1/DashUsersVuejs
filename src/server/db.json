@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "phong",
+      "age": "20",
+      "email": "van@gmail.com",
+      "passwork": "12",
+      "address": "hnoi",
+      "gendersID": "1",
+      "rolesID": "1",
+      "phone": "0331564654"
+    },
+    {
+      "name": "phong111111111111",
+      "age": "20",
+      "email": "van@gmail.com",
+      "passwork": "12",
+      "address": "hnoi",
+      "gendersID": "1",
+      "rolesID": "1",
+      "id": 2,
+      "phone": "0331564654"
+    }
+  ],
+  "genders": [
+    {
+      "id": 1,
+      "name": "male"
+    },
+    {
+      "id": 2,
+      "name": "feMale"
+    }
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "name": "admin"
+    },
+    {
+      "id": 2,
+      "name": "user"
+    }
+  ]
+}
