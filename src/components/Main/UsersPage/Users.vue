@@ -20,7 +20,9 @@
       :columns="columns"
       :data-source="getData"
       rowKey="id"
-    />
+    >
+      <a slot="action" slot-scope="">Edit</a>
+    </a-table>
   </div>
 </template>
 
@@ -53,6 +55,11 @@ const columns = [
     title: 'Roles',
     dataIndex: 'rolesID',
   },
+  {
+    title: 'Action',
+    dataIndex: '',
+    scopedSlots: { customRender: 'action' }
+  }
 ];
 
 
@@ -66,7 +73,7 @@ export default {
   data() {
     return {
       columns,
-      selectedRowKeys: [], // Check here to configure the default column
+      selectedRowKeys: [],
       loading: false,
     };
   },
@@ -88,7 +95,7 @@ export default {
   methods: {
     start() {
       this.loading = true;
-      // ajax request after empty completing
+
       setTimeout(() => {
         this.loading = false;
         this.selectedRowKeys = [];
@@ -96,7 +103,6 @@ export default {
     },
 
     onSelectChange(selectedRowKeys) {
-      console.log('selectedRowKeys changed: ', selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys;
     },
   },

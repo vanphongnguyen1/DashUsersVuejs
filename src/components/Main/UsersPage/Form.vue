@@ -49,6 +49,19 @@
       </a-input>
     </a-form-item>
 
+    <a-form-item v-bind="formItemLayout" label="Address">
+      <a-input
+        v-decorator="[
+          'address',
+          {
+            rules: [{ required: true, message: 'Please input your address!' }],
+          },
+        ]"
+        style="width: 100%"
+      >
+      </a-input>
+    </a-form-item>
+
     <a-form-item v-bind="formItemLayout" label="Age">
       <a-input
         v-decorator="[
@@ -138,12 +151,14 @@
 </template>
 
 <script>
+import { POST_API } from '../../API'
+
+const key = 'updatable'
 
 export default {
   data() {
     return {
       confirmDirty: false,
-      autoCompleteResult: [],
       formItemLayout: {
         labelCol: {
           xs: { span: 24 },
@@ -184,12 +199,27 @@ export default {
   },
 
   methods: {
+    openMessage() {
+      this.$message.loading({ content: 'Loading...', key });
+      setTimeout(() => {
+        this.$message.success({ content: 'Loaded!', key, duration: 2 });
+      }, 1000);
+    },
+
     handleSubmit(e) {
       e.preventDefault()
 
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log('Received values of form: 123', values)
+          // console.log('ada values', values)
+          POST_API('users', values)
+            .then(() => {
+              this.openMessage()
+              return this.$store.dispatch('fetchUsers')
+            })
+            .catch(rej => {
+              console.log('rej.message', rej.message);
+            })
         }
       })
     },

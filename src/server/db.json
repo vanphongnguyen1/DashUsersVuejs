@@ -21,6 +21,30 @@
       "rolesID": "1",
       "id": 2,
       "phone": "0331564654"
+    },
+    {
+      "name": "12",
+      "email": "a@gmail.com",
+      "phone": "12",
+      "address": "12",
+      "age": "12",
+      "gendersID": 1,
+      "rolesID": 1,
+      "password": "12",
+      "confirm": "12",
+      "id": 3
+    },
+    {
+      "name": "122",
+      "email": "a@gmail.com",
+      "phone": "12",
+      "address": "12",
+      "age": "12",
+      "gendersID": 1,
+      "rolesID": 1,
+      "password": "12",
+      "confirm": "12",
+      "id": 4
     }
   ],
   "genders": [

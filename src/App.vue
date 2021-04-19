@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <!-- <Users /> -->
+    <Users />
     <Creact />
   </div>
 </template>
 
 <script>
-// import Users from './components/Main/UsersPage/Users'
+import Users from './components/Main/UsersPage/Users'
 import Creact from './components/Main/UsersPage/Creact'
 
 export default {
   name: 'App',
   components: {
-    // Users,
+    Users,
     Creact
   }
 }

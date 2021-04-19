@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { GET_API } from '../components/API'
 
 //to handle state
 const state = {
@@ -15,7 +15,7 @@ const getters = {}
 const actions = {
   fetchUsers ({ commit }) {
     setTimeout(() => {
-      axios.get('http://localhost:3000/users')
+      GET_API('users')
       .then(response => response.data)
       .then(data => {
         commit('setListUsers', data)
@@ -24,7 +24,8 @@ const actions = {
   },
 
   fetchGenders ({ commit }) {
-    axios.get('http://localhost:3000/genders')
+    // axios.get('http://localhost:3000/genders')
+    GET_API('genders')
     .then(response => response.data)
     .then(data => {
       commit('setGender', data)
@@ -32,7 +33,8 @@ const actions = {
   },
 
   fetchMale ({ commit }) {
-    axios.get('http://localhost:3000/roles')
+    // axios.get('http://localhost:3000/roles')
+    GET_API('roles')
     .then(response => response.data)
     .then(data => {
       commit('setRoles', data)
