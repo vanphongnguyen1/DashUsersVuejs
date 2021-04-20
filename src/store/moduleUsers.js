@@ -38,8 +38,6 @@ const actions = {
       commit('setRoles', data)
     })
   },
-
-
 }
 
 //to handle mutations
