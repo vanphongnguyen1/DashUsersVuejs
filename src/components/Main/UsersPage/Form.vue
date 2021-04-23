@@ -5,6 +5,10 @@
         v-decorator="[
           'name',
           {
+            initialValue: this.getDataEdit.hasOwnProperty('name')
+              ? this.getDataEdit.name
+              : ''
+            ,
             rules: [
               {
                 required: true,
@@ -21,6 +25,10 @@
         v-decorator="[
           'email',
           {
+            initialValue: this.getDataEdit.hasOwnProperty('email')
+              ? this.getDataEdit.email
+              : ''
+            ,
             rules: [
               {
                 type: 'email',
@@ -41,6 +49,10 @@
         v-decorator="[
           'phone',
           {
+            initialValue: this.getDataEdit.hasOwnProperty('phone')
+              ? this.getDataEdit.phone
+              : ''
+            ,
             rules: [{ required: true, message: 'Please input your phone number!' }],
           },
         ]"
@@ -54,6 +66,10 @@
         v-decorator="[
           'address',
           {
+            initialValue: this.getDataEdit.hasOwnProperty('address')
+              ? this.getDataEdit.address
+              : ''
+            ,
             rules: [{ required: true, message: 'Please input your address!' }],
           },
         ]"
@@ -66,6 +82,12 @@
       <a-input
         v-decorator="[
           'age',
+          {
+            initialValue: this.getDataEdit.hasOwnProperty('age')
+              ? this.getDataEdit.age
+              : ''
+            ,
+          }
         ]"
       />
     </a-form-item>
@@ -75,7 +97,13 @@
         v-bind="formItemLayout"
         v-decorator="[
           'gendersID',
-          { rules: [{ required: true, message: 'Please select your gender!' }] },
+          {
+            initialValue: this.getDataEdit.hasOwnProperty('gendersID')
+              ? this.getDataEdit.gendersID
+              : 1
+            ,
+            rules: [{ required: true, message: 'Please select your gender!' }]
+          },
         ]"
         placeholder="Select Gender"
       >
@@ -91,7 +119,13 @@
         v-bind="formItemLayout"
         v-decorator="[
           'rolesID',
-          { rules: [{ required: true, message: 'Please select your role!' }] },
+          {
+            initialValue: this.getDataEdit.hasOwnProperty('rolesID')
+              ? this.getDataEdit.rolesID
+              : 1
+            ,
+            rules: [{ required: true, message: 'Please select your role!' }]
+          },
         ]"
         placeholder="Select Role"
       >
@@ -107,6 +141,10 @@
         v-decorator="[
           'password',
           {
+            initialValue: this.getDataEdit.hasOwnProperty('password')
+              ? this.getDataEdit.password
+              : ''
+            ,
             rules: [
               {
                 required: true,
@@ -126,6 +164,10 @@
         v-decorator="[
           'confirm',
           {
+            initialValue: this.getDataEdit.hasOwnProperty('password')
+              ? this.getDataEdit.password
+              : ''
+            ,
             rules: [
               {
                 required: true,
@@ -151,8 +193,8 @@
 </template>
 
 <script>
-import { POST_API } from '../../API'
-
+// import { POST_API, PUT_API } from '../../API'
+import { mapActions } from 'vuex'
 const key = 'updatable'
 
 export default {
@@ -184,6 +226,18 @@ export default {
     };
   },
 
+  created () {
+    this.$store.dispatch('fetchMale')
+    this.$store.dispatch('fetchGenders')
+  },
+
+  props: {
+    url: {
+      type: String,
+      default: ''
+    }
+  },
+
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'register' });
   },
@@ -195,15 +249,36 @@ export default {
 
     getRoles () {
       return this.$store.state.users.roles
+    },
+
+    getDataEdit () {
+      return this.$store.state.users.dataEdit.user
     }
   },
 
   methods: {
-    openMessage() {
-      this.$message.loading({ content: 'Loading...', key });
+    ...mapActions([
+      'fetchUsers',
+      'postUser',
+      'putUser',
+      'deleteUser'
+    ]),
+    // ...mapActions({
+    //   fetchUsers: 'fetchUsers',
+    //   postUser: 'postUser',
+    //   putUser: 'putUser',
+    //   deleteUser: 'deleteUser'
+    // }),
+    openMessage (text) {
+      this.$message.loading({ content: 'Loading...', key })
+
       setTimeout(() => {
-        this.$message.success({ content: 'Loaded!', key, duration: 2 });
+        this.$message.success({ content: text, key, duration: 2 })
       }, 1000);
+    },
+
+     error (text) {
+      this.$message.error(text)
     },
 
     handleSubmit(e) {
@@ -211,15 +286,34 @@ export default {
 
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          // console.log('ada values', values)
-          POST_API('users', values)
-            .then(() => {
-              this.openMessage()
-              return this.$store.dispatch('fetchUsers')
+          if (this.url === 'created') {
+            this.postUser(values)
+              .then(async() => {
+                this.fetchUsers();
+                this.openMessage('Created Success !')
+                this.form.resetFileds()
+              })
+              .catch(rej => {
+                this.error(rej.message)
+              })
+          } else {
+
+            // PUT_API(`users/${this.getDataEdit.id}`, values)
+            this.putUser({
+              id: this.getDataEdit.id,
+              values
             })
-            .catch(rej => {
-              console.log('rej.message', rej.message);
-            })
+              .then(() => {
+                this.fetchUsers();
+                this.openMessage('Created Success !')
+              })
+              .then(() => {
+                this.$store.commit('setDefaultEditUser')
+              })
+              .catch(rej => {
+                this.error(rej.message)
+              })
+          }
         }
       })
     },
@@ -255,11 +349,7 @@ export default {
 
 <style lang="scss">
   .user-form {
-    display: flex;
-    width: 50%;
     padding: 2rem 3rem;
-    border: 1px solid #e0e0e0;
-    margin: 0 auto;
   }
 
   .ant-form {

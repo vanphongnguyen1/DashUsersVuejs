@@ -4,7 +4,9 @@
       <slot name="length" /> Selected Item
     </p>
 
-    <button class="btn--delete">Delete</button>
+    <button class="btn--delete" @click="handleDeleteUser">
+      Delete
+    </button>
   </div>
 </template>
 
@@ -16,9 +18,12 @@ export default {
     activeClass: {
       type: String,
       default: ''
+    },
+    handleDeleteUser: {
+      type: Function,
+      default: () => {}
     }
   }
-
 }
 </script>
 
@@ -28,10 +33,10 @@ export default {
     justify-content: space-between;
 
     align-items: center;
-    background: rgba(#000000, 0.05);
+    background: #f0f2f5;
 
     position: absolute;
-    bottom: 100%;
+    top: 0;
 
     width: 100%;
     height: 6rem;
