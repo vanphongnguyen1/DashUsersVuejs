@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="components-layout-demo-custom-trigger">
+  <!-- <a-layout id="components-layout-demo-custom-trigger">
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <Menu :collapsed="collapsed"/>
     </a-layout-sider>
@@ -16,13 +16,18 @@
 
       </a-layout-content>
     </a-layout>
-  </a-layout>
+  </a-layout> -->
+
+  <div>
+    <ApiVuejs />
+  </div>
 </template>
 
 <script>
-import Header from './components/Header'
-import Menu from './components/Menu'
-import { eventBus } from './components/EventBus'
+// import Header from './components/Header'
+// import Menu from './components/Menu'
+// import { eventBus } from './components/EventBus'
+import ApiVuejs from './components/ApiVuejs'
 
 export default {
   data() {
@@ -32,13 +37,14 @@ export default {
   },
 
   components: {
-    Header,
-    Menu,
+    // Header,
+    // Menu,
+    ApiVuejs,
   },
 
-  mounted () {
-    eventBus.$on('isCollapsed', data => this.collapsed = data)
-  }
+  // mounted () {
+  //   eventBus.$on('isCollapsed', data => this.collapsed = data)
+  // }
 }
 
 </script>
