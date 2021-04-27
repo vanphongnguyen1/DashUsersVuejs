@@ -8,6 +8,7 @@
   </a-layout-header>
 </template>
 <script>
+
 import { eventBus } from './EventBus'
 export default {
   props: {

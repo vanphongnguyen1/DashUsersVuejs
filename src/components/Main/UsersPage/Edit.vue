@@ -69,6 +69,7 @@ export default {
     opacity: 0;
     visibility: hidden;
     transition: all .3s ease-in-out;
+    overflow-y: overlay;
 
     .box-flex {
       display: flex;

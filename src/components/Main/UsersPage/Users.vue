@@ -4,15 +4,15 @@
       <Loading />
     </div>
 
-    <div class="box-btn">
+    <div class="box-create">
       <router-link to="/users/created">
-        <Create />
+        <BtnCreate />
       </router-link>
     </div>
 
     <BoxDeleteTable
       :activeClass="hasSelected ? 'activeBoxDelete' : ''"
-      :handleDeleteUser="handleDeleteUser"
+      :handleDeleteUser="e => handleDeleteUser(e, selectedRowKeys)"
     >
       <span slot="length">
         {{ selectedRowKeys.length }}
@@ -29,7 +29,16 @@
       rowKey="id"
       :customRow="customRow"
     >
-      <a slot="action" slot-scope="">Edit</a>
+
+      <template slot="action" slot-scope="text, record">
+        <div class="box-btn">
+          <BtnEdit />
+
+          <BtnDelete
+            :handleDeleteUser="e => handleDeleteUser(e, [record.id])"
+          />
+        </div>
+      </template>
     </a-table>
 
     <Edit />
@@ -39,9 +48,10 @@
 <script>
 import Loading from '../../Loading'
 import BoxDeleteTable from '../../BoxDeleteTable'
-import Create from '../../Btn/Create'
+import BtnCreate from '../../Btn/BtnCreate'
 import Edit from './Edit'
-// import { DELETE_API } from '../../API'
+import BtnDelete from '../../Btn/BtnDelete'
+import BtnEdit from '../../Btn/BtnEdit'
 import { mapActions } from 'vuex'
 
 const columns = [
@@ -76,7 +86,9 @@ const columns = [
   {
     title: 'Action',
     dataIndex: '',
-    scopedSlots: { customRender: 'action' }
+    scopedSlots: { customRender: 'action' },
+    width: '25rem',
+    align: 'center'
   }
 ];
 
@@ -84,6 +96,15 @@ const key = 'updatable'
 
 export default {
   name: 'Users',
+
+  components: {
+    Loading,
+    BoxDeleteTable,
+    BtnCreate,
+    Edit,
+    BtnDelete,
+    BtnEdit
+  },
 
   created () {
     this.$store.dispatch('fetchUsers')
@@ -115,6 +136,7 @@ export default {
 
   methods: {
     ...mapActions(['deleteUser']),
+
     start() {
       this.loading = true;
 
@@ -136,16 +158,14 @@ export default {
       }, 1000);
     },
 
-    async handleDeleteUser () {
-      this.selectedRowKeys.forEach(id => {
-        // DELETE_API(`users/${id}`)
-        // this.$store.commit('deleteUser', id)
+    async handleDeleteUser (e, data) {
+      e.stopPropagation()
+
+      data.forEach(id => {
         this.deleteUser(id)
           .catch(rej => {
             this.error(rej.message)
           })
-
-        return
       })
 
       this.openMessage('Delete Success !')
@@ -160,17 +180,13 @@ export default {
     customRow (record) {
       return {
         on: {
-          click: () => this.$store.commit('setEditUser', record)
+          click: () => {
+            this.$store.commit('setEditUser', record)
+            this.selectedRowKeys = []
+          },
         }
       };
     }
-  },
-
-  components: {
-    Loading,
-    BoxDeleteTable,
-    Create,
-    Edit
   }
 };
 </script>
@@ -178,11 +194,16 @@ export default {
 <style lang="scss" scope>
   .users {
     position: relative;
-    // z-index: 3;
+  }
+
+  .box-create {
+    margin: 2rem 0;
   }
 
   .box-btn {
-    margin: 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .ant-table-tbody > tr > td {

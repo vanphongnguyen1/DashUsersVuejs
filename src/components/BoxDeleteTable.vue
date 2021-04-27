@@ -4,13 +4,15 @@
       <slot name="length" /> Selected Item
     </p>
 
-    <button class="btn--delete" @click="handleDeleteUser">
+    <!-- <button class="btn--delete" @click="handleDeleteUser">
       Delete
-    </button>
+    </button> -->
+    <BtnDelete :handleDeleteUser="handleDeleteUser" />
   </div>
 </template>
 
 <script>
+import BtnDelete from './Btn/BtnDelete'
 export default {
   name: 'BoxDeleteTable',
 
@@ -19,10 +21,15 @@ export default {
       type: String,
       default: ''
     },
+
     handleDeleteUser: {
       type: Function,
       default: () => {}
     }
+  },
+
+  components: {
+    BtnDelete
   }
 }
 </script>
@@ -40,7 +47,7 @@ export default {
 
     width: 100%;
     height: 6rem;
-    padding: 0 3rem;
+    padding: 0 1.6rem;
 
     transform: translateY(100%);
     opacity: 0;
@@ -49,34 +56,6 @@ export default {
 
     &__text {
       font-size: 1.6;
-    }
-
-    .btn--delete {
-      position: relative;
-      color: #444;
-      background: #f5c6c6;
-
-      padding: 0.5rem 2rem;
-      font-size: 1.6rem;
-      font-weight: 600;
-
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        background: #efb7b7;
-      }
-
-      &:active::after {
-        position: absolute;
-        top: 0;
-        left: 0;
-        content: "";
-        width: 100%;
-        height: 100%;
-        background: #f3adad;
-      }
     }
   }
 </style>
