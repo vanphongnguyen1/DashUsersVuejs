@@ -6,7 +6,7 @@
       "phone": "111",
       "address": "11",
       "age": "121211111",
-      "gendersID": 1,
+      "genderId": 1,
       "rolesID": 1,
       "password": "121",
       "confirm": "121",
@@ -18,7 +18,7 @@
       "phone": "11",
       "address": "12",
       "age": "12",
-      "gendersID": 1,
+      "genderId": 1,
       "rolesID": 1,
       "password": "12",
       "confirm": "12",
@@ -42,7 +42,7 @@
       "phone": "1",
       "address": "1",
       "age": "1",
-      "gendersID": 1,
+      "genderId": 1,
       "rolesID": 1,
       "password": "1",
       "confirm": "1",
@@ -54,13 +54,14 @@
       "phone": "1",
       "address": "1",
       "age": "1",
-      "gendersID": 2,
+      "genderId": 2,
       "rolesID": 2,
       "password": "1",
       "confirm": "1",
       "id": 13
     }
   ],
+
   "genders": [
     {
       "id": 1,
@@ -71,6 +72,7 @@
       "name": "feMale"
     }
   ],
+
   "roles": [
     {
       "id": 1,
@@ -79,6 +81,123 @@
     {
       "id": 2,
       "name": "user"
+    }
+  ],
+
+  "navbar": [
+    {
+      "id": 0,
+      "title": "DashBroad",
+      "icon": "fas fa-th-large"
+    },
+    {
+      "id": 1,
+      "title": "Users",
+      "icon": "fas fa-user-friends"
+    },
+    {
+      "id": 2,
+      "title": "Orders",
+      "icon": "fas fa-shopping-cart"
+    },
+    {
+      "id": 4,
+      "title": "Products",
+      "icon": "fas fa-book"
+    },
+    {
+      "id": 5,
+      "title": "Slider",
+      "icon": "fas fa-book"
+    }
+  ],
+
+  "groups": [
+    {
+      "id": 1,
+      "name": "Dogs"
+    },
+    {
+      "id": 2,
+      "name": "Mews"
+    },
+    {
+      "id": 3,
+      "name": "Orthers"
+    },
+    {
+      "id": 4,
+      "name": "Accesstion..."
+    }
+  ],
+
+  "lineages": [
+    {
+      "id": 1,
+      "name": "Mew1",
+      "groupId": 2
+    },
+    {
+      "id": 2,
+      "name": "Mew2",
+      "groupId": 2
+    },
+    {
+      "id": 3,
+      "name": "Dog1",
+      "groupId": 1
+    },
+    {
+      "id": 4,
+      "name": "dog2",
+      "groupId": 1
+    }
+  ],
+
+  "products": [
+    {
+      "id": 1,
+      "name": "AAAAAAAAAAA",
+      "url": "aaaaaaaaaaa",
+      "ptice": 10000,
+      "priceSale": 9000,
+      "count": 2,
+      "isNew": false,
+      "isHot": true,
+      "isStatus": true,
+      "genderId": 1,
+      "typeProductId": 1,
+      "lineageId": 1,
+      "imageId": 1
+    },
+    {
+      "id": 2,
+      "name": "AAAAAAAAAAA",
+      "url": "aaaaaaaaaaa",
+      "ptice": 10000,
+      "priceSale": 9000,
+      "count": 2,
+      "isNew": false,
+      "isHot": true,
+      "isStatus": true,
+      "genderId": 2,
+      "typeProductId": 2,
+      "lineageId": 3,
+      "imageId": 1
+    }
+  ],
+
+  "typeProducts": [
+    {
+      "id": 1,
+      "description": "<ul><li>aaaaaaaaaa</li></ul>"
+    }
+  ],
+
+  "images": [
+    {
+      "id": 1,
+      "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
     }
   ]
 }

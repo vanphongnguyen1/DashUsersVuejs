@@ -7,31 +7,20 @@
   >
     <div class="logo" />
 
-    <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-      <a-menu-item key="1">
-        <router-link class="router-link" to="/users">
-          <a-icon type="user" />
-          <span>
-            Users
-          </span>
-        </router-link>
-      </a-menu-item>
+    <a-menu
+      theme="dark"
+      mode="inline"
+      :default-selected-keys="['1']"
+    >
+      <a-menu-item
+        :key="item.id"
+        v-for="item in dataNavbar"
+      >
+        <router-link class="" :to="'/' + item.title" active-class="router-link-exact-active ">
+          <span class="menu__list--icon" :class="item.icon"></span>
 
-      <a-menu-item key="2">
-        <router-link class="router-link" to="/aaa">
-          <a-icon type="video-camera" />
-          <span>
-            Nav2
-          </span>
-        </router-link>
-      </a-menu-item>
-
-      <a-menu-item key="3">
-        <router-link class="router-link" to="/aaa">
-          <a-icon type="upload" />
-
-          <span>
-            Nav2
+          <span v-if="!collapsed">
+            {{ item.title }}
           </span>
         </router-link>
       </a-menu-item>
@@ -43,11 +32,30 @@
 export default {
   props: {
     collapsed: Boolean
+  },
+
+  computed: {
+    dataNavbar () {
+      return this.$store.state.navbar.list
+    }
+  },
+
+  created () {
+    this.$store.dispatch('fetchNavbar')
   }
 }
 </script>
 <style lang="scss">
   .router-link {
     display: block;
+  }
+
+  .menu {
+    &__list {
+      &--icon {
+        margin-right: 0.5rem;
+        width: 2rem;
+      }
+    }
   }
 </style>

@@ -67,4 +67,8 @@ export default {
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
+
+.ant-layout-sider {
+  height: 100vh;
+}
 </style>

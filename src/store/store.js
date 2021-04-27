@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import moduleUsers from './moduleUsers'
+import moduleMenu from './moduleMenu'
+import moduleGroup from './moduleGroup'
+import moduleLineage from './moduleLineage'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   modules: {
-    users: moduleUsers
+    users: moduleUsers,
+    navbar: moduleMenu,
+    group: moduleGroup,
+    lineage: moduleLineage
   }
 })

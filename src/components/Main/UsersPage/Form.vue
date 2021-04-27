@@ -185,7 +185,7 @@
     </a-form-item>
 
     <a-form-item v-bind="tailFormItemLayout">
-      <a-button type="primary" html-type="submit">
+      <a-button type="primary" html-type="submit" block>
         Register
       </a-button>
     </a-form-item>
