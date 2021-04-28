@@ -193,8 +193,8 @@
 </template>
 
 <script>
-// import { POST_API, PUT_API } from '../../API'
 import { mapActions } from 'vuex'
+
 const key = 'updatable'
 
 export default {
@@ -227,7 +227,7 @@ export default {
   },
 
   created () {
-    this.$store.dispatch('fetchMale')
+    this.$store.dispatch('fetchRoles')
     this.$store.dispatch('fetchGenders')
   },
 
@@ -244,11 +244,11 @@ export default {
 
   computed: {
     getGenders () {
-      return this.$store.state.users.genders
+      return this.$store.state.gender.list
     },
 
     getRoles () {
-      return this.$store.state.users.roles
+      return this.$store.state.roles.list
     },
 
     getDataEdit () {
@@ -263,12 +263,7 @@ export default {
       'putUser',
       'deleteUser'
     ]),
-    // ...mapActions({
-    //   fetchUsers: 'fetchUsers',
-    //   postUser: 'postUser',
-    //   putUser: 'putUser',
-    //   deleteUser: 'deleteUser'
-    // }),
+
     openMessage (text) {
       this.$message.loading({ content: 'Loading...', key })
 

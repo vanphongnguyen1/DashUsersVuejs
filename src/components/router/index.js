@@ -1,6 +1,7 @@
 import Users from '../Main/UsersPage/Users.vue'
 import Creact from '../Main/UsersPage/Creact.vue'
 import Products from '../Main/ProductsPage/Products.vue'
+import CreactEditProduct from '../Main/ProductsPage/CreactEditProduct.vue'
 
 export const routes = [
   {
@@ -22,5 +23,9 @@ export const routes = [
   {
     path: '/products',
     component: Products,
+  },
+  {
+    path: '/products/created',
+    component: CreactEditProduct,
   }
 ]

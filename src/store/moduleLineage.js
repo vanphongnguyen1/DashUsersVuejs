@@ -15,6 +15,14 @@ const actions = {
       commit('setListLineage', data)
     })
   },
+
+  fetchLineageGroup ({commit}, data) {
+    GET_API(`group/${data}/lineages`)
+    .then(response => response.data)
+    .then(data => {
+      commit('setListLineage', data)
+    })
+  }
 }
 
 const mutations = {
@@ -22,6 +30,11 @@ const mutations = {
     state.list = payload
     state.loading = 'success'
   },
+
+  setDefaultLineage (state) {
+    state.list = []
+    state.loading = 'loading'
+  }
 }
 
 //export store module
