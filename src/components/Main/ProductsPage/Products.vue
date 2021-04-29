@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-10">
-              <ContentProducts />
+              <ContentProducts :id="item.id" />
             </div>
           </div>
         </div>
@@ -59,6 +59,9 @@ export default {
   created () {
     this.$store.dispatch('fetchGroup')
     this.$store.dispatch('fetchLineage')
+    this.$store.dispatch('fetchImages')
+    this.$store.dispatch('fetchProducts')
+    this.$store.dispatch('fetchTypeProducts')
   },
 }
 </script>

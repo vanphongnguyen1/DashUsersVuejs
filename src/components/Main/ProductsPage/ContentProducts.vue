@@ -1,14 +1,7 @@
 <template>
   <div class="content-product">
-    <div class="row">
-      <ItemProduct />
-      <ItemProduct />
-      <ItemProduct />
-      <ItemProduct />
-      <ItemProduct />
-      <ItemProduct />
-      <ItemProduct />
-      <ItemProduct />
+    <div class="row" v-if="filterProducts.length">
+      <ItemProduct v-for="item in filterProducts" :key="item.id" :item="item" />
     </div>
   </div>
 </template>
@@ -19,28 +12,41 @@ import ItemProduct from './ItemProduct'
 export default {
   data() {
     return {
-      pageSize: 20,
-      current: 4,
-    };
+
+    }
+  },
+
+  props: {
+    id: {
+      type: [Number, String]
+    }
+  },
+
+  computed: {
+    filterProducts () {
+      const newData = []
+      const dataImages = this.$store.state.images.list
+      const dataProduct = this.$store.state.products.list.filter(item => item.groupId === this.id)
+
+      dataProduct.forEach(item => {
+        dataImages.find(image => {
+          if (item.imageId === image.id) {
+            newData.push({
+              ...item,
+              images: image.files
+            })
+          }
+        })
+      })
+
+      console.log(newData);
+      return newData
+    }
   },
 
   components: {
     ItemProduct
   },
-
-  watch: {
-    pageSize(val) {
-      console.log('pageSize', val);
-    },
-    current(val) {
-      console.log('current', val);
-    },
-  },
-  methods: {
-    onShowSizeChange(current, pageSize) {
-      console.log(current, pageSize);
-    },
-  }
 }
 </script>
 

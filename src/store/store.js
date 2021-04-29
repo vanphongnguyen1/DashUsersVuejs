@@ -3,9 +3,14 @@ import Vuex from 'vuex'
 import moduleUsers from './moduleUsers'
 import moduleMenu from './moduleMenu'
 import moduleGroup from './moduleGroup'
+
 import moduleLineage from './moduleLineage'
 import moduleGender from './moduleGender'
 import moduleRoles from './moduleRoles'
+
+import moduleImages from './moduleImages'
+import moduleTypeproduct from './moduleTypeproduct'
+import moduleProducts from './moduleProducts'
 
 Vue.use(Vuex)
 
@@ -14,8 +19,13 @@ export const store = new Vuex.Store({
     users: moduleUsers,
     navbar: moduleMenu,
     group: moduleGroup,
+
     lineage: moduleLineage,
     gender: moduleGender,
-    roles: moduleRoles
+    roles: moduleRoles,
+
+    images: moduleImages,
+    typeProduct: moduleTypeproduct,
+    products: moduleProducts,
   }
 })

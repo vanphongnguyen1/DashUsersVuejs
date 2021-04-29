@@ -53,6 +53,7 @@ import Edit from './Edit'
 import BtnDelete from '../../Btn/BtnDelete'
 import BtnEdit from '../../Btn/BtnEdit'
 import { mapActions } from 'vuex'
+import { DELETE_API } from '../../../store/usersService'
 
 const columns = [
   {
@@ -162,7 +163,7 @@ export default {
       e.stopPropagation()
 
       data.forEach(id => {
-        this.deleteUser(id)
+        DELETE_API(`users/${id}`)
           .catch(rej => {
             this.error(rej.message)
           })

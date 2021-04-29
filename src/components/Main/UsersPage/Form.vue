@@ -194,6 +194,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { POST_API, PUT_API } from '../../../store/usersService'
 
 const key = 'updatable'
 
@@ -223,6 +224,7 @@ export default {
           },
         },
       },
+      form: this.$form.createForm(this, { name: 'advanced_search' }),
     };
   },
 
@@ -258,10 +260,7 @@ export default {
 
   methods: {
     ...mapActions([
-      'fetchUsers',
-      'postUser',
-      'putUser',
-      'deleteUser'
+      'fetchUsers'
     ]),
 
     openMessage (text) {
@@ -282,22 +281,18 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           if (this.url === 'created') {
-            this.postUser(values)
+            POST_API('users', values)
               .then(async() => {
                 this.fetchUsers();
                 this.openMessage('Created Success !')
-                this.form.resetFileds()
+                this.form.resetFields()
               })
               .catch(rej => {
                 this.error(rej.message)
               })
           } else {
 
-            // PUT_API(`users/${this.getDataEdit.id}`, values)
-            this.putUser({
-              id: this.getDataEdit.id,
-              values
-            })
+            PUT_API(`users/${this.getDataEdit.id}`, values)
               .then(() => {
                 this.fetchUsers();
                 this.openMessage('Created Success !')

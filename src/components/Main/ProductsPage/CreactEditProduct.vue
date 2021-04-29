@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import From from './From'
+import From from './Form/From'
 export default {
   data() {
     return {

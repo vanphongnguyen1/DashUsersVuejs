@@ -7,17 +7,17 @@
         </div>
 
         <img
-          src="../../../assets/upload/3bbbe06ac418f29b74dd1116284c7e69.jpg"
+          :src="item.images[0]"
           alt=""
           class="item-product__image"
         >
 
         <div class="item-product__info">
-          <p class="item-product__info--name">DDaij mat l</p>
+          <p class="item-product__info--name">{{ item.name }}</p>
 
           <div class="box-price">
-            <span class="item-product__info--price-sale">90000</span>
-            <span class="item-product__info--price">100000</span>
+            <span class="item-product__info--price-sale">{{ item.priceSale }}</span>
+            <span class="item-product__info--price">{{ item.price}}</span>
           </div>
         </div>
 
@@ -38,7 +38,16 @@
 </template>
 <script>
 export default {
-
+  props: {
+    item: {
+      type: Object
+    }
+  },
+  computed: {
+    dataImages () {
+      return this.$store.state.images.list
+    }
+  }
 }
 </script>
 <style lang="scss">

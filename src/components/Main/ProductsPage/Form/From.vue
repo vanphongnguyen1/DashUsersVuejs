@@ -3,7 +3,7 @@
     <a-form :form="form" :label-col="{ span: 2 }" :wrapper-col="{ span: 10 }" @submit="handleSubmit">
       <a-tabs default-active-key="1">
 
-        <a-tab-pane key="1" tab="Tab Title 1">
+        <a-tab-pane key="1" tab="Information">
             <a-form-item label="Name">
               <a-input
                 v-decorator="[
@@ -111,7 +111,6 @@
                 ]"
                 placeholder="Select a option and change input text above"
                 :disabled="dataLineageLoading !== 'success'"
-
               >
                 <a-select-option
                   v-for="item in dataLineage"
@@ -167,16 +166,30 @@
             </a-form-item>
         </a-tab-pane>
 
-        <a-tab-pane key="2" tab="Tab Title 2">
-          <p>Content of Tab Pane 2</p>
-          <p>Content of Tab Pane 2</p>
-          <p>Content of Tab Pane 2</p>
+        <a-tab-pane key="2" tab="Images">
+          <a-form-item :wrapper-col="{ span: 16 }">
+
+            <div class="clearfix">
+              <a-upload
+                :file-list="fileList"
+                :remove="handleRemove"
+                :before-upload="beforeUpload"
+                :multiple="true"
+              >
+                <a-button>
+                  <a-icon type="upload" />
+
+                  Select File
+                </a-button>
+              </a-upload>
+            </div>
+          </a-form-item>
         </a-tab-pane>
 
-        <a-tab-pane key="3" tab="Tab Title 3">
-          <p>Content of Tab Pane 3</p>
-          <p>Content of Tab Pane 3</p>
-          <p>Content of Tab Pane 3</p>
+        <a-tab-pane key="3" tab="Description">
+          <a-form-item :wrapper-col="{ span: 16 }">
+            <vue-editor v-model="contentEditor" />
+          </a-form-item>
         </a-tab-pane>
       </a-tabs>
 
@@ -190,6 +203,13 @@
 </template>
 
 <script>
+import { getBase64 } from '../../../../assets/logic/base64'
+import { VueEditor } from "vue2-editor"
+import { POST_API } from '../../../../store/usersService'
+import removeVietnameseTones from '../../../../assets/logic/remoVietNameseTones'
+
+const key = 'updatable'
+
 export default {
   data() {
     return {
@@ -200,9 +220,16 @@ export default {
         lineageId: '',
       },
 
+      fileList: [],
+      contentEditor: '',
+
       formLayout: 'horizontal',
       form: this.$form.createForm(this, { name: 'coordinated' }),
     };
+  },
+
+  components: {
+    VueEditor
   },
 
   computed: {
@@ -225,21 +252,64 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault()
+      const { fileList, contentEditor } = this
 
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          const newData = {
-            ...this.dataForm,
-            ...values
+      this.form.validateFields(async (err, values) => {
+        if (err || !fileList.length || !contentEditor) {
+          this.error('Hãy điền đầy đủ thông tin form !')
+        }
+
+        if (!err && fileList.length && contentEditor) {
+
+          // const dataFiles = new FormData() //data files gửi server
+          const fileBase64 = []
+
+          for (let i = 0; i < fileList.length; i++) {
+            fileBase64.push(await getBase64(fileList[i]))
           }
 
-          console.log('asdasd', this.dataForm);
-          console.log('Received values of form: ', newData);
+          const newData = {
+            ...this.dataForm,
+            ...values,
+            url: removeVietnameseTones(values.name)
+          }
+
+          POST_API('images', { files: fileBase64 })
+            .then(response => {
+              const imageId = response.data.id
+
+              POST_API('typeProducts' , { description: contentEditor })
+                .then(response => {
+                  const typeProductId = response.data.id
+
+                  POST_API('products', {
+                    ...newData,
+                    imageId,
+                    typeProductId
+                  })
+                    .then(() => {
+                      this.openMessage('Created Success !')
+                      this.form.resetFields()
+                      this.contentEditor = ''
+                      this.fileList = []
+                    })
+                    .catch(() => {
+                      this.error('product')
+                    })
+                })
+                .catch(() => {
+                  this.error('type')
+                })
+            })
+            .catch((rej) => {
+              console.log('asdasd', rej);
+              this.error('image')
+            })
         }
-      });
+      })
     },
 
-    handleChangeSelectGroup(value) {
+    handleChangeSelectGroup (value) {
       this.$store.commit('setDefaultLineage')
 
       setTimeout(() => {
@@ -256,6 +326,33 @@ export default {
         ...this.dataForm,
         [name]: checked
       }
+    },
+
+// Methos Upload products
+    handleRemove (file) {
+      const index = this.fileList.indexOf(file)
+      const newFileList = this.fileList.slice()
+
+      newFileList.splice(index, 1)
+      this.fileList = newFileList
+    },
+
+    beforeUpload (file) {
+      this.fileList = [...this.fileList, file]
+      return false
+    },
+
+// valided form
+    error (text) {
+      this.$message.error(text)
+    },
+
+    openMessage (text) {
+      this.$message.loading({ content: 'Loading...', key })
+
+      setTimeout(() => {
+        this.$message.success({ content: text, key, duration: 2 })
+      }, 1000);
     },
   },
 
@@ -287,5 +384,31 @@ export default {
       cursor: pointer;
     }
   }
+}
+
+// css upload
+.clearfix {
+  min-height: 20rem;
+  background: #f0f0f0;
+  padding: 1rem;
+}
+
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
+
+.ant-btn.ant-btn {
+  display: flex;
+  align-items: center;
+}
+
+.ant-btn > .anticon.anticon {
+  line-height: 0;
 }
 </style>
