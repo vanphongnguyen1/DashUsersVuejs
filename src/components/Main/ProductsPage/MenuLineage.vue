@@ -37,6 +37,7 @@ export default {
 
 <style lang="scss">
   .ant-menu {
+    background: red;
     height: 100vh;
   }
 </style>

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <a-form :form="form" :label-col="{ span: 2 }" :wrapper-col="{ span: 10 }" @submit="handleSubmit">
+    <a-form
+      :form="form"
+      :label-col="{ span: 2 }"
+      :wrapper-col="{ span: 10 }"
+      @submit="handleSubmit"
+    >
       <a-tabs default-active-key="1">
 
         <a-tab-pane key="1" tab="Information">
@@ -9,6 +14,7 @@
                 v-decorator="[
                   'name',
                   {
+                    initialValue: dataForm.name,
                     rules: [{
                     required: true,
                     message: 'Please input your name!'
@@ -24,9 +30,11 @@
                 v-decorator="[
                   'price',
                   {
+                    initialValue: dataForm.price,
+
                     rules: [{
-                    required: true,
-                    message: 'Please input your price!'
+                      required: true,
+                      message: 'Please input your price!'
                     }]
                   }
                 ]"
@@ -40,6 +48,7 @@
                 v-decorator="[
                   'priceSale',
                   {
+                    initialValue: dataForm.priceSale,
                     rules: [{
                     required: true,
                     message: 'Please input your price sale!'
@@ -55,6 +64,7 @@
                 v-decorator="[
                   'genderId',
                   {
+                    initialValue: dataForm.genderId,
                     rules: [
                       { required: true, message: 'Please select your gender!' }
                     ]
@@ -78,6 +88,7 @@
                 v-decorator="[
                   'groupId',
                   {
+                    initialValue: dataForm.groupId,
                     rules: [
                       { required: true, message: 'Please select your group!' }
                     ]
@@ -132,8 +143,7 @@
                 <a-switch
                   id="isStatus"
                   name="isStatus"
-                  :default-checked="dataForm.isStatus"
-                  @change="onChangeSwitch"
+                  v-model="dataForm.isStatus"
                 />
               </div>
 
@@ -145,8 +155,7 @@
                 <a-switch
                   id="isNew"
                   name="isNew"
-                  :default-checked="dataForm.isNew"
-                  @change="onChangeSwitch"
+                  v-model="dataForm.isNew"
                 />
               </div>
 
@@ -158,8 +167,7 @@
                 <a-switch
                   id="isHot"
                   name="isHot"
-                  :default-checked="dataForm.isHot"
-                  @change="onChangeSwitch"
+                  v-model="dataForm.isHot"
                 />
               </div>
               </div>
@@ -170,18 +178,13 @@
           <a-form-item :wrapper-col="{ span: 16 }">
 
             <div class="clearfix">
-              <a-upload
-                :file-list="fileList"
-                :remove="handleRemove"
-                :before-upload="beforeUpload"
-                :multiple="true"
-              >
-                <a-button>
-                  <a-icon type="upload" />
+              <Upload
+                :fileList="fileList"
 
-                  Select File
-                </a-button>
-              </a-upload>
+                :handleUpload="handleUpload"
+                :handleDeleteImage="handleDeleteImage"
+              />
+
             </div>
           </a-form-item>
         </a-tab-pane>
@@ -205,8 +208,10 @@
 <script>
 import { getBase64 } from '../../../../assets/logic/base64'
 import { VueEditor } from "vue2-editor"
-import { POST_API } from '../../../../store/usersService'
+import { POST_API, PUT_API } from '../../../../store/usersService'
 import removeVietnameseTones from '../../../../assets/logic/remoVietNameseTones'
+import { PRODUCTEDIT, PRODUCTCREATED } from '../../../../dataDefault'
+import Upload from '../../../Upload'
 
 const key = 'updatable'
 
@@ -218,8 +223,14 @@ export default {
         isHot: true,
         isNew: false,
         lineageId: '',
+        name: "",
+        price: '',
+        priceSale: '',
+        genderId: 1,
+        groupId: 1,
+        imageId: '',
+        typeProductId: '',
       },
-
       fileList: [],
       contentEditor: '',
 
@@ -229,10 +240,14 @@ export default {
   },
 
   components: {
-    VueEditor
+    VueEditor,
+    Upload
   },
 
   computed: {
+    productId() {
+      return this.$route.params.id
+    },
     dataGender () {
       return this.$store.state.gender.list
     },
@@ -247,9 +262,42 @@ export default {
     dataLineageLoading () {
       return this.$store.state.lineage.loading
     },
+
+    getPatch () {
+      return this.$route.name
+    },
+
+    getIsCreated () {
+      console.log('asd', this.getPatch);
+      return PRODUCTCREATED === this.getPatch
+    },
+
+    getIsEdit () {
+      return PRODUCTEDIT === this.getPatch
+    }
   },
 
   methods: {
+    async handleUpload (e) {
+      const { files, type  } = e.target
+
+      if ( type === 'file') {
+        const base64 = []
+
+        for (let i = 0; i < files.length; i++) {
+          base64.push(
+            await getBase64(files[i])
+          )
+        }
+
+        this.fileList = [...this.fileList, ...base64]
+      }
+    },
+
+    handleDeleteImage (index) {
+      this.fileList.splice(index, 1)
+    },
+
     handleSubmit(e) {
       e.preventDefault()
       const { fileList, contentEditor } = this
@@ -260,51 +308,67 @@ export default {
         }
 
         if (!err && fileList.length && contentEditor) {
-
-          // const dataFiles = new FormData() //data files gửi server
-          const fileBase64 = []
-
-          for (let i = 0; i < fileList.length; i++) {
-            fileBase64.push(await getBase64(fileList[i]))
-          }
-
           const newData = {
             ...this.dataForm,
             ...values,
             url: removeVietnameseTones(values.name)
           }
 
-          POST_API('images', { files: fileBase64 })
-            .then(response => {
-              const imageId = response.data.id
+          if (this.getIsCreated) {
+            POST_API('images', { files: fileList })
+              .then(response => {
+                const imageId = response.data.id
 
-              POST_API('typeProducts' , { description: contentEditor })
-                .then(response => {
-                  const typeProductId = response.data.id
+                POST_API('typeProducts' , { description: contentEditor })
+                  .then(response => {
+                    const typeProductId = response.data.id
 
-                  POST_API('products', {
-                    ...newData,
-                    imageId,
-                    typeProductId
+                    POST_API('products', {
+                      ...newData,
+                      imageId,
+                      typeProductId
+                    })
+                      .then(() => {
+                        this.openMessage('Created Success !')
+                        this.form.resetFields()
+                        this.contentEditor = ''
+                        this.fileList = []
+                      })
+                      .catch(() => {
+                        this.error('product')
+                      })
                   })
-                    .then(() => {
-                      this.openMessage('Created Success !')
-                      this.form.resetFields()
-                      this.contentEditor = ''
-                      this.fileList = []
-                    })
-                    .catch(() => {
-                      this.error('product')
-                    })
-                })
-                .catch(() => {
-                  this.error('type')
-                })
+                  .catch(() => {
+                    this.error('type')
+                  })
+              })
+              .catch((rej) => {
+                console.log('asdasd', rej);
+                this.error('image')
+              })
+          }
+
+          if (this.getIsEdit) {
+            PUT_API(`images/${this.dataForm.imageId}`, { files: fileList })
+            .catch(rej => {
+              this.error(rej.message)
             })
-            .catch((rej) => {
-              console.log('asdasd', rej);
-              this.error('image')
+
+            PUT_API(
+              `typeProducts/${this.dataForm.typeProductId}`,
+              { description: contentEditor }
+            )
+            .catch(rej => {
+              this.error(rej.message)
             })
+
+            PUT_API(`products/${this.dataForm.id}`, newData)
+            .catch(rej => {
+              this.error(rej.message)
+            })
+
+            this.openMessage('Created Success !')
+          }
         }
       })
     },
@@ -339,6 +403,7 @@ export default {
 
     beforeUpload (file) {
       this.fileList = [...this.fileList, file]
+      console.log('aaa', this.fileList);
       return false
     },
 
@@ -359,6 +424,26 @@ export default {
   created () {
     this.$store.dispatch('fetchGenders')
     this.$store.dispatch('fetchGroup')
+    this.$store.dispatch('fetchLineageGroup', this.dataForm.groupId)
+
+    if (this.getIsEdit) {
+      this.$store.dispatch('fetchProduct', this.productId)
+      .then(data => {
+        this.dataForm = data;
+
+        this.$store.dispatch('fetchTypeProduct', this.dataForm.typeProductId)
+          .then(data => {
+            this.contentEditor = data.description;
+          })
+
+        this.$store.dispatch('fetchImage', this.dataForm.imageId)
+          .then(data => {
+            this.fileList = [...data.files]
+
+            console.log('adasd', this.fileList);
+          })
+      })
+    }
   }
 };
 </script>
@@ -406,6 +491,7 @@ export default {
 .ant-btn.ant-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .ant-btn > .anticon.anticon {

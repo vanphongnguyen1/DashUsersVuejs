@@ -5,10 +5,7 @@ const state = {
   list: [],
   loading: 'loading',
 
-  // dataEdit: {
-  //   image: {},
-  //   isUser: false
-  // }
+  dataEdit: {}
 }
 
 //to handle state
@@ -22,6 +19,13 @@ const actions = {
     .then(data => {
       commit('setListTypeProducts', data)
     })
+  },
+
+  async fetchTypeProduct ({ commit }, id) {
+    let res = await GET_API(`typeProducts/${id}`)
+    commit('setTypeProductEdit', res.data)
+
+    return res.data
   },
 
   postTypeProduct (state, data) {
@@ -44,10 +48,9 @@ const mutations = {
     state.loading = 'success'
   },
 
-  // setEditUser (state, payload) {
-  //   state.dataEdit.user = payload,
-  //   state.dataEdit.isUser = true
-  // },
+  setTypeProductEdit (state, payload) {
+    state.dataEdit = payload
+  }
 
   // setDefaultEditUser () {
   //   state.dataEdit.user = {}

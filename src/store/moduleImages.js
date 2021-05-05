@@ -5,10 +5,7 @@ const state = {
   list: [],
   loading: 'loading',
 
-  // dataEdit: {
-  //   image: {},
-  //   isUser: false
-  // }
+  dataEdit: {}
 }
 
 //to handle state
@@ -22,6 +19,13 @@ const actions = {
     .then(data => {
       commit('setListImages', data)
     })
+  },
+  async fetchImage ({ commit }, id) {
+    console.log('da', id);
+
+    let res = await GET_API(`images/${id}`)
+    commit('setImageEdit', res.data)
+    return res.data
   },
 
   postImage (state, data) {
@@ -43,6 +47,10 @@ const mutations = {
     state.list = payload
     state.loading = 'success'
   },
+
+  setImageEdit (state, payload) {
+    state.dataEdit = payload
+  }
 
   // setEditUser (state, payload) {
   //   state.dataEdit.user = payload,

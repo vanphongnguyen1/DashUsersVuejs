@@ -39,7 +39,6 @@ export default {
         })
       })
 
-      console.log(newData);
       return newData
     }
   },

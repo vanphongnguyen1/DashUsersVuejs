@@ -4,20 +4,17 @@ import { DELETE_API, POST_API, PUT_API, GET_API } from './usersService'
 const state = {
   list: [],
   loading: 'loading',
-
-  // dataEdit: {
-  //   image: {},
-  //   isUser: false
-  // }
 }
 
 //to handle state
-const getters = {}
+const getters = {
+  product: ({dataEdit}) => dataEdit
+}
 
 //to handle actions
 const actions = {
   fetchProducts ({ commit }) {
-    GET_API('products')
+     GET_API('products')
     .then(response => response.data)
     .then(data => {
       commit('setListProducts', data)
@@ -35,6 +32,11 @@ const actions = {
   deleteProducts (state, id) {
     DELETE_API(`products/${id}`)
   },
+
+  async fetchProduct (state, id) {
+    let res = await GET_API(`products/${id}`)
+    return res.data;
+  },
 }
 
 //to handle mutations
@@ -44,15 +46,13 @@ const mutations = {
     state.loading = 'success'
   },
 
-  // setEditUser (state, payload) {
-  //   state.dataEdit.user = payload,
-  //   state.dataEdit.isUser = true
-  // },
+  setEditProduct (state, payload) {
+    state.dataEdit = payload
+  },
 
-  // setDefaultEditUser () {
-  //   state.dataEdit.user = {}
-  //   state.dataEdit.isUser = false
-  // },
+  setDefaultEditProduct () {
+    state.dataEdit = {}
+  }
 }
 
 //export store module

@@ -22,10 +22,24 @@ export const routes = [
   },
   {
     path: '/products',
+    name: 'products',
     component: Products,
+    // children: [
+    //   {
+    //     path: 'created',
+    //     name: 'created',
+    //     component: CreactEditProduct,
+    //   }
+    // ]
   },
   {
-    path: '/products/created',
+    path: '/products-edit/:id',
+    name: 'product-edit',
     component: CreactEditProduct,
-  }
+  },
+  {
+    path: '/products-created',
+    name: 'product-created',
+    component: CreactEditProduct,
+  },
 ]

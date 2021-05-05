@@ -22,21 +22,30 @@
         </div>
 
         <div class="item-product__btn">
-          <div class="item-product__show">
-            <span class="item-product__show--icon fas fa-images" />
-            <span class="item-product__show--text">Product</span>
+          <div class="item-product__show" @click="handleDelete">
+            <span class="item-product__show--icon fas fa-trash" />
+            <span class="item-product__show--text">Delete</span>
           </div>
 
-          <div class="item-product__show">
+          <router-link
+            class="item-product__show"
+            :to="{name: 'product-edit', params: {id: item.id}}"
+
+          >
             <span class="item-product__show--icon fas fa-images" />
             <span class="item-product__show--text">Edit</span>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
+import { DELETE_API } from '../../../store/usersService'
+
+const key = 'updatable'
+
 export default {
   props: {
     item: {
@@ -47,9 +56,38 @@ export default {
     dataImages () {
       return this.$store.state.images.list
     }
+  },
+
+  methods: {
+    // handleClickEdit () {
+    //   this.$store.commit('setEditProduct', this.item)
+    // },
+
+    async handleDelete () {
+      const { item } = this
+
+      DELETE_API(`products/${item.id}`)
+      DELETE_API(`images/${item.imageId}`)
+      DELETE_API(`typeProducts/${item.typeProductId}`)
+
+      this.openMessage('Delete success!')
+
+      await this.$store.dispatch('fetchImages')
+      await this.$store.dispatch('fetchProducts')
+      await this.$store.dispatch('fetchTypeProducts')
+    },
+
+    openMessage (text) {
+      this.$message.loading({ content: 'Loading...', key })
+
+      setTimeout(() => {
+        this.$message.success({ content: text, key, duration: 2 })
+      }, 1000);
+    },
   }
 }
 </script>
+
 <style lang="scss">
   .content-product {
     &__box {

@@ -1,7 +1,8 @@
 <template>
   <div class="products">
     <div class="box-create">
-      <router-link to="/products/created">
+      <router-link
+        :to="{name: 'product-created'}">
         <BtnCreate />
       </router-link>
     </div>
