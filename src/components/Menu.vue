@@ -16,7 +16,10 @@
         :key="item.id"
         v-for="item in dataNavbar"
       >
-        <router-link class="" :to="'/' + item.title" active-class="router-link-exact-active ">
+        <router-link
+          :to="'/' + item.title.toLowerCase()"
+          active-class="router-link-exact-active"
+        >
           <span class="menu__list--icon" :class="item.icon"></span>
 
           <span v-if="!collapsed">

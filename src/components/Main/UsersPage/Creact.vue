@@ -11,7 +11,7 @@
 import Form from './Form'
 
 export default {
-  name: 'CreactUser',
+  name: 'creact-user',
   components: {
     Form,
   },

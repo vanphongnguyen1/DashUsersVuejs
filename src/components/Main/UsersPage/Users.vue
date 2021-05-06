@@ -5,7 +5,7 @@
     </div>
 
     <div class="box-create">
-      <router-link to="/users/created">
+      <router-link :to="{name: pathName}">
         <BtnCreate />
       </router-link>
     </div>
@@ -54,6 +54,9 @@ import BtnDelete from '../../Btn/BtnDelete'
 import BtnEdit from '../../Btn/BtnEdit'
 import { mapActions } from 'vuex'
 import { DELETE_API } from '../../../store/usersService'
+import { PATH_NAME_ROUTE } from '../../../dataDefault'
+
+const { name } = PATH_NAME_ROUTE.users.children.created
 
 const columns = [
   {
@@ -96,7 +99,16 @@ const columns = [
 const key = 'updatable'
 
 export default {
-  name: 'Users',
+  name: 'users',
+
+  data() {
+    return {
+      pathName: name,
+      columns,
+      selectedRowKeys: [],
+      loading: false,
+    }
+  },
 
   components: {
     Loading,
@@ -109,16 +121,7 @@ export default {
 
   created () {
     this.$store.dispatch('fetchUsers')
-    this.$store.dispatch('fetchMale')
     this.$store.dispatch('fetchGenders')
-  },
-
-  data() {
-    return {
-      columns,
-      selectedRowKeys: [],
-      loading: false,
-    };
   },
 
   computed: {

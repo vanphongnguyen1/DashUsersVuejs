@@ -29,8 +29,7 @@
 
           <router-link
             class="item-product__show"
-            :to="{name: 'product-edit', params: {id: item.id}}"
-
+            :to="{name: pathEdit, params: {id: item.id}}"
           >
             <span class="item-product__show--icon fas fa-images" />
             <span class="item-product__show--text">Edit</span>
@@ -43,10 +42,18 @@
 
 <script>
 import { DELETE_API } from '../../../store/usersService'
+import { PATH_NAME_ROUTE } from '../../../dataDefault'
 
+const { name } = PATH_NAME_ROUTE.products.children.edit
 const key = 'updatable'
 
 export default {
+  data() {
+    return {
+      pathEdit: name
+    }
+  },
+
   props: {
     item: {
       type: Object

@@ -2,7 +2,7 @@
   <div class="products">
     <div class="box-create">
       <router-link
-        :to="{name: 'product-created'}">
+        :to="{name: pathCreated}">
         <BtnCreate />
       </router-link>
     </div>
@@ -33,10 +33,15 @@
 import MenuLineage from './MenuLineage'
 import ContentProducts from './ContentProducts'
 import BtnCreate from '../../Btn/BtnCreate'
+import { PATH_NAME_ROUTE } from '../../../dataDefault'
+
+const { name } = PATH_NAME_ROUTE.products.children.created
 
 export default {
   data() {
-    return {}
+    return {
+      pathCreated: name
+    }
   },
 
   components: {
