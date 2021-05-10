@@ -4,12 +4,11 @@ import { DELETE_API, POST_API, PUT_API, GET_API } from './usersService'
 const state = {
   list: [],
   loading: 'loading',
+  lineageProduct: 0
 }
 
 //to handle state
-const getters = {
-  product: ({dataEdit}) => dataEdit
-}
+const getters = {}
 
 //to handle actions
 const actions = {
@@ -37,6 +36,10 @@ const actions = {
     let res = await GET_API(`products/${id}`)
     return res.data;
   },
+
+  dataLineageProduct ({commit}, payload) {
+    commit('setDataLineageProduct', payload)
+  }
 }
 
 //to handle mutations
@@ -52,6 +55,10 @@ const mutations = {
 
   setDefaultEditProduct () {
     state.dataEdit = {}
+  },
+
+  setDataLineageProduct(state, payload) {
+    state.lineageProduct = payload
   }
 }
 

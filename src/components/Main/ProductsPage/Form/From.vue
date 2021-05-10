@@ -430,7 +430,9 @@ export default {
       this.$store.dispatch('fetchProduct', this.productId)
       .then(data => {
         this.dataForm = data;
-
+        this.$nextTick(() => {
+          console.log(11111, this.dataSample);
+        })
         this.$store.dispatch('fetchTypeProduct', this.dataForm.typeProductId)
           .then(data => {
             this.contentEditor = data.description;
@@ -439,8 +441,6 @@ export default {
         this.$store.dispatch('fetchImage', this.dataForm.imageId)
           .then(data => {
             this.fileList = [...data.files]
-
-            console.log('adasd', this.fileList);
           })
       })
     }

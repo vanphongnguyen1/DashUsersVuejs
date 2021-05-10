@@ -57,8 +57,8 @@ export default {
   },
 
   methods: {
-    callback(key) {
-      console.log(key)
+    callback() {
+      this.$store.dispatch('dataLineageProduct', 0)
     },
   },
 

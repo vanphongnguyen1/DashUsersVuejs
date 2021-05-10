@@ -12,7 +12,11 @@ const state = {
 }
 
 //to handle state
-const getters = {}
+const getters = {
+  getListUser (state) {
+    return state.listUsers
+  }
+}
 
 //to handle actions
 const actions = {
@@ -36,6 +40,11 @@ const actions = {
 
   deleteUser (state, id) {
     DELETE_API(`users/${id}`)
+  },
+
+  async fetchUser (state, id) {
+    let res = await GET_API(`users/${id}`)
+    return res.data;
   },
 }
 

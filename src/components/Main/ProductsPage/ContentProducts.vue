@@ -23,7 +23,11 @@ export default {
   },
 
   computed: {
+    getLineage () {
+      return this.$store.state.products.lineageProduct
+    },
     filterProducts () {
+      console.log('asdsad', this.getLineage);
       const newData = []
       const dataImages = this.$store.state.images.list
       const dataProduct = this.$store.state.products.list.filter(item => item.groupId === this.id)
@@ -39,6 +43,9 @@ export default {
         })
       })
 
+      if (this.getLineage > 0) {
+        return newData.filter(item => item.lineageId === this.getLineage)
+      }
       return newData
     }
   },

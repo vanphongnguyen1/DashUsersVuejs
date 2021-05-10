@@ -21,8 +21,6 @@ const actions = {
     })
   },
   async fetchImage ({ commit }, id) {
-    console.log('da', id);
-
     let res = await GET_API(`images/${id}`)
     commit('setImageEdit', res.data)
     return res.data

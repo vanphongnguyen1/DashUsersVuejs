@@ -2,14 +2,7 @@
   "users": [
     {
       "name": "mmmm11112111111",
-      "email": "a@gmail.com",
       "phone": "111",
-      "address": "11",
-      "age": "121211111",
-      "genderId": 1,
-      "rolesID": 1,
-      "password": "121",
-      "confirm": "121",
       "id": 6
     },
     {
@@ -505,27 +498,132 @@
       "id": 9
     }
   ],
-
-  "orders": [
+  "productDetailOrders": [
     {
-      "userId": 1,
-      "id": 1,
-      "statusId": 1,
-      "products": [
-        {
-          "name": "",
-          "count": 1,
-          "price": 1,
-          "totalPrice": 2,
-          "id": 1,
-          "image": "url"
-        }
-      ],
+      "count": 10,
+      "totalPrice": 10,
+      "productId": 1,
+      "id": 1
+    },
+    {
+      "count": 10,
+      "totalPrice": 120,
+      "productId": 2,
+      "id": 2
+    },
+    {
+      "productId": 3,
+      "id": 3,
+      "count": 1,
+      "totalPrice": 2
+    },
+    {
+      "productId": 3,
+      "id": 4,
+      "count": 1,
+      "totalPrice": 2
+    },
+    {
+      "count": 4,
+      "productId": 4,
+      "totalPrice": 4,
+      "id": 5
+    },
+    {
+      "count": 2,
+      "productId": 5,
       "totalPrice": 2,
-      "totalCount": 2
+      "id": 6
+    },
+    {
+      "count": 4,
+      "productId": 6,
+      "totalPrice": 4,
+      "id": 7
+    },
+    {
+      "productId": 8,
+      "id": 8,
+      "count": 1,
+      "totalPrice": 2
     }
   ],
-
+  "sumProductOrders": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "productDetailOrderId": 1
+    },
+    {
+      "id": 2,
+      "orderId": 1,
+      "productDetailOrderId": 2
+    },
+    {
+      "id": 3,
+      "orderId": 1,
+      "productDetailOrderId": 3
+    },
+    {
+      "id": 4,
+      "orderId": 2,
+      "productDetailOrderId": 4
+    },
+    {
+      "id": 5,
+      "orderId": 2,
+      "productDetailOrderId": 7
+    },
+    {
+      "id": 6,
+      "orderId": 3,
+      "productDetailOrderId": 5
+    },
+    {
+      "id": 7,
+      "orderId": 3,
+      "productDetailOrderId": 6
+    }
+  ],
+  "orders": [
+    {
+      "userId": 6,
+      "id": 1,
+      "statusId": 1,
+      "totalCount": 30,
+      "totalPrice": 140,
+      "transportId": 2,
+      "paymentId": 2,
+      "priceTrasport": 25000,
+      "intoMeny": 25140,
+      "namePayment": "Thanh toán Online",
+      "phostatusIdne": 1
+    },
+    {
+      "userId": 10,
+      "id": 2,
+      "statusId": 3,
+      "totalCount": 1,
+      "totalPrice": 2,
+      "transportId": 2,
+      "paymentId": 1,
+      "priceTrasport": 20000,
+      "intoMeny": 30000,
+      "namePayment": ""
+    },
+    {
+      "userId": 12,
+      "id": 3,
+      "statusId": 2,
+      "totalCount": 1,
+      "totalPrice": 2,
+      "transportId": 2,
+      "paymentId": 1,
+      "priceTrasport": 20000,
+      "intoMeny": 30000,
+      "namePayment": ""
+    }
+  ],
   "status": [
     {
       "id": 1,
@@ -538,6 +636,33 @@
     {
       "id": 3,
       "name": "cancelled"
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "name": "Nhận hàng thanh toán"
+    },
+    {
+      "id": 2,
+      "name": "Thanh toán Online"
+    }
+  ],
+  "transports": [
+    {
+      "id": 1,
+      "name": "GHTK",
+      "price": 30000
+    },
+    {
+      "id": 2,
+      "name": "GHN",
+      "price": 20000
+    },
+    {
+      "id": 3,
+      "name": "JTX",
+      "price": 25000
     }
   ]
 }

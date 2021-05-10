@@ -37,10 +37,6 @@ export const PATH_NAME_ROUTE = {
     name: 'orders',
 
     children: {
-      created: {
-        path: 'created',
-        name: 'order-created',
-      },
       edit: {
         path: ':id/edit',
         name: 'order-edit'

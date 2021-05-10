@@ -12,6 +12,14 @@ import moduleImages from './moduleImages'
 import moduleTypeproduct from './moduleTypeproduct'
 import moduleProducts from './moduleProducts'
 
+import moduleOrders from './moduleOrders'
+import moduleStatus from './moduleStatus'
+import modulePayments from './modulePayments'
+import moduleTransport from './moduleTransport'
+
+import moduleSumProductOrders from './moduleSumProductOrders'
+import moduleProductDetailOrders from './moduleProductDetailOrders'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -27,5 +35,12 @@ export const store = new Vuex.Store({
     images: moduleImages,
     typeProduct: moduleTypeproduct,
     products: moduleProducts,
+
+    orders: moduleOrders,
+    status: moduleStatus,
+    transports: moduleTransport,
+    payments: modulePayments,
+    productDetailOrders: moduleProductDetailOrders,
+    sumProductOrders: moduleSumProductOrders
   }
 })
