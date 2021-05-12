@@ -12,14 +12,15 @@
     </div>
 
     <p class="title__width info-products__item--total-price">
-      {{product.totalPrice}}
+      {{ product.totalPrice || product.price }}
     </p>
 
-    <a-button type="danger" class="title__width">
+    <a-button type="danger" class="title__width" @click="() => handleDeleteProduct(product.id)">
       Delete
     </a-button>
   </div>
 </template>
+
 <script>
 export default {
   props: {
@@ -31,10 +32,15 @@ export default {
   methods: {
     handleOnchangeCount(value) {
       this.$emit('handleOnchangeCount', {value, id: this.product.id})
+    },
+
+    handleDeleteProduct(id) {
+      this.$emit('handleDeleteProduct', id)
     }
   },
 }
 </script>
+
 <style lang="scss">
 
   .info-products {

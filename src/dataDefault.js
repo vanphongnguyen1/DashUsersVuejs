@@ -2,7 +2,10 @@ export const PRODUCTEDIT = 'product-edit'
 export const PRODUCTCREATED = 'product-created'
 
 export const PATH_NAME_ROUTE = {
-  dashbroad: 'dashbroad',
+  dashboard: {
+    path: 'dashboard',
+    name: 'dashboard'
+  },
 
   products: {
     path: 'products',
@@ -28,7 +31,11 @@ export const PATH_NAME_ROUTE = {
       created: {
         path: 'created',
         name: 'creact-user',
-      }
+      },
+      edit: {
+        path: ':id/edit',
+        name: 'edit-user',
+      },
     }
   },
 

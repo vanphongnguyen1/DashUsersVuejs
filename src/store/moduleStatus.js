@@ -12,11 +12,15 @@ const getters = {}
 //to handle actions
 const actions = {
   fetchStatus ({ commit }) {
-    GET_API('status')
-    .then(response => response.data)
-    .then(data => {
+    const res = GET_API('status')
+    .then(response => {
+      const { data } = response
+      console.log('asaaaa', data);
       commit('setListStatus', data)
+      return data
     })
+
+    return res
   },
 
   postStauts (state, data) {

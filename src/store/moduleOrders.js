@@ -10,6 +10,16 @@ const state = {
 const getters = {
   filterOrders (state) {
     return id => state.list.filter(item => item.id === id)
+  },
+
+  sumIntoMeny (state) {
+    return id => {
+      const newData = state.list.filter(item => item.id !== id)
+      let sumIntoMeny = 0
+
+      newData.forEach(item => sumIntoMeny += item.intoMeny)
+      return sumIntoMeny
+    }
   }
 }
 

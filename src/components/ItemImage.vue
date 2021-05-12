@@ -121,5 +121,13 @@ export default {
       visibility: visible;
       z-index: 2;
     }
+
+    .box-view {
+      &__image {
+        width: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
+    }
   }
 </style>

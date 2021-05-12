@@ -19,10 +19,11 @@ import moduleTransport from './moduleTransport'
 
 import moduleSumProductOrders from './moduleSumProductOrders'
 import moduleProductDetailOrders from './moduleProductDetailOrders'
-
+import createLogger from 'vuex/dist/logger'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  plugins: [createLogger()],
   modules: {
     users: moduleUsers,
     navbar: moduleMenu,

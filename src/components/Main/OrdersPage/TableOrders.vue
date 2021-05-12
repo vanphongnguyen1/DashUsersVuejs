@@ -1,26 +1,39 @@
 <template>
-  <a-table
-    :rowSelection="{
-      selectedRowKeys: selectedRowKeys,
-      onChange: onSelectChange,
-    }"
-    :columns="columns"
-    :data-source="newData"
-    :scroll="{ x: 1600 }"
-    rowKey="id"
-    :customRow="customRow"
-  >
-    <p slot="action" slot-scope="text, record">
-      <a-button type="primary" @click="(e) => handleEditOrder(e, record)">
-        Edit
-      </a-button>
-    </p>
-  </a-table>
+  <div>
+    <BoxDeleteTable
+      :activeClass="hasSelected ? 'activeBoxDelete' : ''"
+      :handleDeleteUser="e => handleDeleteUser(e, selectedRowKeys)"
+    >
+      <span slot="length">
+        {{ selectedRowKeys.length }}
+      </span>
+    </BoxDeleteTable>
+
+    <a-table
+      :rowSelection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+      }"
+      :columns="columns"
+      :data-source="newData"
+      :scroll="{ x: 1600 }"
+      rowKey="id"
+      :customRow="customRow"
+    >
+      <p slot="action" slot-scope="text, record">
+        <a-button type="primary" @click="(e) => handleEditOrder(e, record)">
+          Edit
+        </a-button>
+      </p>
+    </a-table>
+  </div>
+
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { PATH_NAME_ROUTE } from '../../../dataDefault'
+import BoxDeleteTable from '../../BoxDeleteTable'
 
 const { name } = PATH_NAME_ROUTE.orders.children.edit
 const columns = [
@@ -73,6 +86,10 @@ export default {
     }
   },
 
+  components: {
+    BoxDeleteTable
+  },
+
   props: {
     id: {
       type: Number,
@@ -85,6 +102,10 @@ export default {
       'filterOrders',
       'getListUser'
     ]),
+
+    hasSelected() {
+      return this.selectedRowKeys.length > 0;
+    },
 
     newData () {
       const dataOrders = this.filterOrders(this.id)

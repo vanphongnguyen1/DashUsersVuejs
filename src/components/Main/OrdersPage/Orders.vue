@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="orders">
     <a-tabs default-active-key="1" @change="callback">
       <a-tab-pane
         :tab="item.name.toUpperCase()"
@@ -23,7 +23,7 @@ export default {
   },
 
   components: {
-    TableOrders
+    TableOrders,
   },
 
   computed: {
@@ -45,6 +45,13 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+  .orders {
+    position: relative;
+
+    .ant-tabs {
+      padding-top: 6rem;
+    }
+  }
 
 </style>

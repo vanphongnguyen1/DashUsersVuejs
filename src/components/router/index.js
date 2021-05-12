@@ -2,21 +2,27 @@ import Users from '../Main/UsersPage/Users.vue'
 import RootUsers from '../Main/UsersPage'
 import RootProducts from '../Main/ProductsPage'
 import RootOrders from '../Main/OrdersPage'
+import DashBoard from '../Main/DashBoard/Page'
 import Form from '../Main/OrdersPage/Form.vue'
 import Creact from '../Main/UsersPage/Creact.vue'
+import Edit from '../Main/UsersPage/Edit.vue'
 import Products from '../Main/ProductsPage/Products.vue'
 import CreactEditProduct from '../Main/ProductsPage/CreactEditProduct.vue'
 import Orders from '../Main/OrdersPage/Orders.vue'
 import { PATH_NAME_ROUTE } from '../../dataDefault'
 
-const { users, products, orders } = PATH_NAME_ROUTE
+const { users, products, orders, dashboard } = PATH_NAME_ROUTE
 
 export const routes = [
-  // {
-  //   path: '/',
-  //   redirect: '/users',
-  //   component: RooteUsers,
-  // },
+  {
+    path: '/',
+    redirect: `/${dashboard.path}`,
+  },
+  {
+    path: `/${dashboard.path}`,
+    name: dashboard.name,
+    component: DashBoard,
+  },
   {
     path: `/${users.path}`,
     component: RootUsers,
@@ -30,6 +36,11 @@ export const routes = [
         path: users.children.created.path,
         component: Creact,
         name: users.children.created.name
+      },
+      {
+        path: users.children.edit.path,
+        component: Edit,
+        name: users.children.edit.name
       },
     ]
   },

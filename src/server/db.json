@@ -1,15 +1,22 @@
 {
   "users": [
     {
-      "name": "mmmm11112111111",
-      "phone": "111",
+      "name": "aa",
+      "email": "a@gmail.com",
+      "phone": 12121212121,
+      "address": "qweasdasdasdasdasd",
+      "age": "12",
+      "genderId": 1,
+      "rolesID": 1,
+      "password": "12",
+      "confirm": "12",
       "id": 6
     },
     {
-      "name": "aa",
+      "name": "a32323asd",
       "email": "a@gmail.com",
-      "phone": "11",
-      "address": "12",
+      "phone": "asdasdasdsadas",
+      "address": "qweqwewqewqe",
       "age": "12",
       "genderId": 1,
       "rolesID": 1,
@@ -197,7 +204,7 @@
   "navbar": [
     {
       "id": 0,
-      "title": "DashBroad",
+      "title": "Dashboard",
       "icon": "fas fa-th-large"
     },
     {
@@ -500,25 +507,25 @@
   ],
   "productDetailOrders": [
     {
-      "count": 10,
-      "totalPrice": 10,
+      "count": 7,
+      "totalPrice": 7,
       "productId": 1,
       "id": 1
     },
     {
-      "count": 10,
-      "totalPrice": 120,
+      "count": 7,
+      "totalPrice": 7,
       "productId": 2,
       "id": 2
     },
     {
-      "productId": 3,
-      "id": 3,
       "count": 1,
-      "totalPrice": 2
+      "totalPrice": 2,
+      "productId": 3,
+      "id": 3
     },
     {
-      "productId": 3,
+      "productId": 7,
       "id": 4,
       "count": 1,
       "totalPrice": 2
@@ -589,15 +596,15 @@
     {
       "userId": 6,
       "id": 1,
-      "statusId": 1,
-      "totalCount": 30,
-      "totalPrice": 140,
+      "statusId": 2,
+      "totalCount": 15,
+      "totalPrice": 16,
       "transportId": 2,
-      "paymentId": 2,
+      "paymentId": 1,
       "priceTrasport": 25000,
-      "intoMeny": 25140,
-      "namePayment": "Thanh toán Online",
-      "phostatusIdne": 1
+      "intoMeny": 25016,
+      "namePayment": "Nhận hàng thanh toán",
+      "phostatusIdne": 2
     },
     {
       "userId": 10,

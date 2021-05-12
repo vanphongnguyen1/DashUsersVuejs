@@ -201,7 +201,8 @@ export default {
   }
 
   .box-create {
-    margin: 2rem 0;
+    margin: 1rem 0;
+    padding: 0.7rem 0;
   }
 
   .box-btn {

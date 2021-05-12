@@ -15,19 +15,22 @@ const state = {
 const getters = {
   getListUser (state) {
     return state.listUsers
+  },
+
+  getUser (state) {
+      return id => state.listUsers.find(item => item.id === id)
+    }
   }
-}
+
 
 //to handle actions
 const actions = {
   fetchUsers ({ commit }) {
-    setTimeout(() => {
-      GET_API('users')
-      .then(response => response.data)
-      .then(data => {
-        commit('setListUsers', data)
-      })
-    }, 500)
+    GET_API('users')
+    .then(response => response.data)
+    .then(data => {
+      commit('setListUsers', data)
+    })
   },
 
   postUser (state, data) {

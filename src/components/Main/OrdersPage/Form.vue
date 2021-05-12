@@ -139,6 +139,7 @@
           v-for="item in dataProducts"
           :key="item.id"
           :product="item"
+          @handleDeleteProduct="handleDeleteProduct"
         />
       </div>
 
@@ -146,30 +147,30 @@
         <h3 class="heading">Thông tin đơn hàng</h3>
 
         <ul class="info-order__list">
-          <li class="info-order__item">
-            <span class="info-order__item--name">Total Count</span>
-            <span class="info-order__item--name">{{dataOrder.totalCount}}</span>
-          </li>
+          <ItemInfoOrder
+            title="Total Count"
+            :data="dataOrder.totalCount"
+          />
 
-          <li class="info-order__item">
-            <span class="info-order__item--name">Total Price</span>
-            <span class="info-order__item--name">{{dataOrder.totalPrice}}</span>
-          </li>
+          <ItemInfoOrder
+            title="Total Price"
+            :data="dataOrder.totalPrice"
+          />
 
-          <li class="info-order__item">
-            <span class="info-order__item--name">Transport</span>
-            <span class="info-order__item--name">{{dataOrder.priceTrasport}}</span>
-          </li>
+          <ItemInfoOrder
+            title="Transport"
+            :data="dataOrder.priceTrasport"
+          />
 
-          <li class="info-order__item">
-            <span class="info-order__item--name">payment</span>
-            <span class="info-order__item--name">{{ dataOrder.namePayment }}</span>
-          </li>
+          <ItemInfoOrder
+            title="payment"
+            :data="dataOrder.namePayment"
+          />
 
-          <li class="info-order__item">
-            <span class="info-order__item--name">toTal money</span>
-            <span class="info-order__item--name">{{ dataOrder.intoMeny }}</span>
-          </li>
+          <ItemInfoOrder
+            title="intoMeny"
+            :data="dataOrder.intoMeny"
+          />
         </ul>
       </div>
 
@@ -184,7 +185,10 @@
 
 <script>
 import ItemProductOrder from './ItemProductOrder'
+import ItemInfoOrder from './ItemInfoOrder'
 import { PUT_API } from '../../../store/usersService'
+
+const key = 'updatable'
 
 export default {
   data() {
@@ -197,7 +201,8 @@ export default {
   },
 
   components: {
-    ItemProductOrder
+    ItemProductOrder,
+    ItemInfoOrder
   },
 
   computed: {
@@ -232,6 +237,11 @@ export default {
       e.preventDefault()
 
       this.form.validateFields(async (err, values) => {
+        if (err) {
+          this.error('Hãy điền đầy đủ thông tin form !')
+          return
+        }
+
         if (!err) {
           console.log('aaaa', values);
           console.log('121212', this.dataProducts);
@@ -239,12 +249,14 @@ export default {
           this.dataProducts.forEach(item => {
             PUT_API(`productDetailOrders/${item.id}`, {
               count: item.count,
-              totalPrice: item.totalPrice
+              totalPrice: item.totalPrice,
+              productId: item.productId
             })
 
             PUT_API(`users/${this.dataOrder.userId}`, {
+              ...this.dataUser,
               name: values.name,
-              address: values.adderss,
+              address: values.address,
               phone: values.phone,
             })
 
@@ -256,6 +268,7 @@ export default {
             })
           })
 
+          this.openMessage('Edit Success !')
         }
       })
     },
@@ -280,7 +293,24 @@ export default {
       this.dataOrder.totalPrice = totalPrice
 
       this.dataOrder.intoMeny = totalPrice + this.dataOrder.priceTrasport
-    }
+    },
+
+    handleDeleteProduct(id) {
+      const filterProduct = this.dataProducts.filter(item => item.id === id)
+      this.dataProducts = filterProduct
+    },
+
+    openMessage (text) {
+      this.$message.loading({ content: 'Loading...', key })
+
+      setTimeout(() => {
+        this.$message.success({ content: text, key, duration: 2 })
+      }, 1000);
+    },
+
+    error (text) {
+      this.$message.error(text)
+    },
   },
 
   created() {
