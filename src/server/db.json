@@ -671,5 +671,15 @@
       "name": "JTX",
       "price": 25000
     }
+  ],
+
+  "comments": [
+    {
+      "id": 1,
+      "title": "aasd",
+      "userId": 2,
+      "productId": "aasdddaa",
+      "statusId": 1
+    }
   ]
 }

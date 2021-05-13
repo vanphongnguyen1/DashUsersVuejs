@@ -58,9 +58,15 @@ export default {
         background-color: rgba( #000000, .04);
       }
 
-      // &:active::after {
-      //   @include background-action;
-      // }
+      &:active::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: rgba(#000000, 0.2);
+      }
 
       .info-order {
         display: flex;
@@ -82,6 +88,7 @@ export default {
           &--customer {
             color: #757575;
             display: block;
+            text-transform: capitalize;
           }
         }
 

@@ -3,7 +3,6 @@
       <div class="dashboard__row">
         <div class="dashboard__box box-md-5 box-sm-12">
           <div class="dashboard__row">
-            <p >{{this.$store.state.users.loading}}</p>
             <router-link class="box-half" to='/'>
               <RootPaper
                 icon="far fa-dollar-sign"
@@ -21,13 +20,10 @@
             </router-link>
           </div>
 
-          <!-- {
-            dataPendingOrdersLength
-            ? <PendingOrder data={dataPendingOrders}/>
-            : ''
-          } -->
-
-          <PendingOrder :data="this.filterOrders(isPendding)"/>
+          <PendingOrder
+            :data="this.filterOrders(isPendding).slice(0, 10)"
+            v-if="this.filterOrders(isPendding).length"
+          />
         </div>
 
 
@@ -48,6 +44,8 @@
                       ? <ShowComments data={dataPendingComments}/>
                       : ''
                   } -->
+
+                  <!-- <ShowComments :data={dataPendingComments.slice(0, 10)}/> -->
                 </div>
               </div>
 
@@ -62,11 +60,11 @@
                     />
                   </router-link>
 
-                  <!-- {
-                    dataUsers.length
-                      ? <ShowCustomers data={dataUsers}/>
-                      : ''
-                  } -->
+                  <ShowCustomers
+                    :listUser="getListUser.slice(0, 10)"
+                    v-if="getListUser.length"
+                  />
+
                 </div>
               </div>
             </div>
@@ -79,6 +77,8 @@
 <script>
 import RootPaper from './RootPaper'
 import PendingOrder from './PendingOrder'
+import ShowCustomers from './ShowCustomer'
+// import ShowComments from './ShowComments'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -91,7 +91,9 @@ export default {
 
   components: {
     RootPaper,
-    PendingOrder
+    PendingOrder,
+    ShowCustomers,
+    // ShowComments
   },
 
   computed: {

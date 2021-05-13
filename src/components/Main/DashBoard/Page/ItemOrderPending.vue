@@ -1,13 +1,14 @@
 <template>
   <div>
     <li class="pending-order__item">
-      <Link
+      <router-link
         class="pending-order__link"
-        to='/'
+        :to="'/' + nameAPI + '/' + data.id + '/' + edit"
       >
         <div class="info-order">
           <div class="info-order__user">
-            <!-- <Avarta avarta={data.avarta} name={data.name}/> -->
+            <!-- <Avarta avarta={data.avarta} :name="nameUser" /> -->
+            <Avarta avarta="" :name="nameUser" />
 
             <div class="info-order__detail">
               <span class="info-order__detail--date">
@@ -24,23 +25,32 @@
 
           <div class="info-order__meny">{{ data.intoMeny }}</div>
         </div>
-      </Link>
+      </router-link>
     </li>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Avarta from '../../../Avarta'
+import { EDIT, NAME_API } from '../../../../dataDefault'
+
 export default {
   data() {
     return {
-      nameUser: ''
+      nameUser: '',
+      edit: EDIT,
+      nameAPI: NAME_API.orders
     }
   },
   props: {
     data: {
       type: Object
     }
+  },
+
+  components: {
+    Avarta
   },
 
   computed: {
@@ -54,8 +64,8 @@ export default {
 
     const user = this.getUser(this.data.userId)
 
-  console.log('mounasadted', user)
-    // this.nameUser = user.name
+  // console.log('mounasadted', user)
+    this.nameUser = user.name
   }
 }
 </script>

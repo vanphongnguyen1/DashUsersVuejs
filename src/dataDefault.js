@@ -1,15 +1,25 @@
 export const PRODUCTEDIT = 'product-edit'
 export const PRODUCTCREATED = 'product-created'
+export const EDIT = 'edit'
+export const CREAT = 'creat'
+
+export const NAME_API = {
+  dashboard: 'dashboard',
+  products: 'products',
+  users: 'users',
+  orders: 'orders',
+  slider: 'slider'
+}
 
 export const PATH_NAME_ROUTE = {
   dashboard: {
-    path: 'dashboard',
-    name: 'dashboard'
+    path: NAME_API.dashboard,
+    name: NAME_API.dashboard
   },
 
   products: {
-    path: 'products',
-    name: 'products',
+    path: NAME_API.products,
+    name: NAME_API.products,
 
     children: {
       created: {
@@ -24,8 +34,8 @@ export const PATH_NAME_ROUTE = {
   },
 
   users: {
-    path: 'users',
-    name: 'users',
+    path: NAME_API.users,
+    name: NAME_API.users,
 
     children: {
       created: {
@@ -40,8 +50,8 @@ export const PATH_NAME_ROUTE = {
   },
 
   orders: {
-    path: 'orders',
-    name: 'orders',
+    path: NAME_API.orders,
+    name: NAME_API.orders,
 
     children: {
       edit: {
@@ -50,5 +60,5 @@ export const PATH_NAME_ROUTE = {
       }
     }
   },
-  slide: 'slide'
+  slider: 'slider'
 }
