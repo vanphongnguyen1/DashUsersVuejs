@@ -4,6 +4,7 @@
     <span class="info-order__item--name">{{ data }}</span>
   </li>
 </template>
+
 <script>
 export default {
   props: {
@@ -20,6 +21,7 @@ export default {
   }
 }
 </script>
+
 <style lang="">
 
 </style>

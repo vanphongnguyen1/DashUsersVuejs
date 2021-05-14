@@ -1,4 +1,5 @@
 import Users from '../Main/UsersPage/Users.vue'
+import Login from '../Login'
 import RootUsers from '../Main/UsersPage'
 import RootProducts from '../Main/ProductsPage'
 import RootOrders from '../Main/OrdersPage'
@@ -16,7 +17,7 @@ const { users, products, orders, dashboard } = PATH_NAME_ROUTE
 export const routes = [
   {
     path: '/',
-    redirect: `/${dashboard.path}`,
+    component: Login,
   },
   {
     path: `/${dashboard.path}`,

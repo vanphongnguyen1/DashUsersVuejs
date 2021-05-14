@@ -22,7 +22,6 @@
   </a-layout-header>
 </template>
 <script>
-
 import { eventBus } from './EventBus'
 import Avarta from './Avarta'
 import PoPoverHeader from './PoPoverHeader'
